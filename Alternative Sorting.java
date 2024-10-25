@@ -24,23 +24,25 @@ class Solution {
         // Your code goes here
         Arrays.sort(arr);
         
-        // Initialize result list
-        ArrayList<Integer> result = new ArrayList<>();
+        // Initialize result list with expected capacity to avoid resizing
+        ArrayList<Integer> result = new ArrayList<>(arr.length);
         
-        // Initialize two pointers
+        // Use two pointers for alternate placement
         int start = 0;
         int end = arr.length - 1;
         
-        // Add elements alternately from end (largest) and start (smallest)
-        while (start <= end) {
-            if (start == end) {
-                result.add(arr[start]); // For the middle element in an odd-length array
-            } else {
-                result.add(arr[end--]); // Add largest remaining element
-                result.add(arr[start++]); // Add smallest remaining element
-            }
+        // Add elements in the required alternating order
+        while (start < end) {
+            result.add(arr[end--]); // Add largest element
+            result.add(arr[start++]); // Add smallest element
+        }
+        
+        // If there's a middle element in an odd-sized array, add it
+        if (start == end) {
+            result.add(arr[start]);
         }
         
         return result;
+        
     }
 }
