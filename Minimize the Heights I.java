@@ -19,9 +19,15 @@ Constraints
 1 ≤ number of towers ≤ 105
 0 ≤ arr[i] ≤ 105
 */
-int n = arr.length;
+import java.util.Arrays;
+
+class Solution {
+    public int getMinDiff(int k, int[] arr) {
+        int n = arr.length;
+        
+        // If there's only one tower, the difference is zero.
         if (n == 1) {
-            return 0; // If there's only one tower, the difference is zero.
+            return 0;
         }
 
         // Sort the array to arrange towers by their heights.
@@ -30,20 +36,27 @@ int n = arr.length;
         // Initial difference between the maximum and minimum heights.
         int diff = arr[n - 1] - arr[0];
 
-        // Smallest and largest after modification.
+        // The smallest possible height after modification can either be:
+        // arr[0] + k (incrementing the smallest tower)
+        // arr[n-1] - k (decrementing the largest tower)
+        // The largest possible height can either be:
+        // arr[n-1] + k (incrementing the largest tower)
+        // arr[0] - k (decrementing the smallest tower)
+        
+        // Start with the initial difference
         int smallest = arr[0] + k;
         int largest = arr[n - 1] - k;
 
-        // Iterate through the sorted array.
-        for (int i = 0; i < n - 1; i++) {
-            int minHeight = Math.min(smallest, arr[i + 1] - k);
-            int maxHeight = Math.max(largest, arr[i] + k);
-
-            // Skip if minHeight becomes negative (invalid case).
-            if (minHeight < 0) continue;
-
-            // Update the minimum difference.
+        // We go through each element and calculate the possible minimum difference.
+        for (int i = 1; i < n; i++) {
+            // The smallest tower can either be increased by k or the current tower decreased by k
+            int minHeight = Math.min(smallest, arr[i] - k);
+            int maxHeight = Math.max(largest, arr[i - 1] + k);
+            
+            // Update the minimum difference
             diff = Math.min(diff, maxHeight - minHeight);
         }
 
         return diff;
+    }
+}
