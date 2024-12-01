@@ -22,16 +22,15 @@ class Solution:
     # Function to find the first non-repeating character in a string.
     def nonRepeatingChar(self, s):
         # Step 1: Create a frequency dictionary
-        freq = {}
+        dic = {}
+        for i in s:
+            if i not in dic:
+                dic[i]=1
+            else:
+                dic[i]+=1
         
-        # Step 2: Count the frequency of each character
-        for char in s:
-            freq[char] = freq.get(char, 0) + 1
-        
-        # Step 3: Iterate through the string to find the first non-repeating character
-        for char in s:
-            if freq[char] == 1:
-                return char
-        
-        # If no non-repeating character exists, return '$'
+        for j in dic:
+            if dic[j]==1:
+                return j
         return '$'
+    
